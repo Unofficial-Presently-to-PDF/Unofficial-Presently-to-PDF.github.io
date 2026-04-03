@@ -7,7 +7,6 @@ const buildPdfButton = document.getElementById('buildPdfButton');
 const resultsList = document.getElementById('resultsList');
 const errorBanner = document.getElementById('errorBanner');
 const entryCount = document.getElementById('entryCount');
-const lineCount = document.getElementById('lineCount');
 
 function normalizeLines(text) {
     return text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
@@ -79,9 +78,8 @@ function setError(message) {
     errorBanner.textContent = message;
 }
 
-function render(entries, lineTotal) {
+function render(entries) {
     entryCount.textContent = String(entries.length);
-    lineCount.textContent = String(lineTotal);
 
     if (entries.length === 0) {
         resultsList.innerHTML = '<div class="empty-state">No entries yet. Load a file or paste text, then create the book.</div>';
