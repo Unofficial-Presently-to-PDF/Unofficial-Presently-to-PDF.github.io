@@ -93,7 +93,7 @@ function render(entries, lineTotal) {
     jsonPreview.textContent = lastJson;
 
     if (entries.length === 0) {
-        resultsList.innerHTML = '<div class="empty-state">No entries yet. Load a file or paste text, then parse it.</div>';
+        resultsList.innerHTML = '<div class="empty-state">No entries yet. Load a file or paste text, then read it.</div>';
         return;
     }
 
@@ -124,7 +124,7 @@ function parseAndRender() {
         setError('');
         render(entries, normalizeLines(text).length);
     } catch (error) {
-        setError(error instanceof Error ? error.message : 'Unable to parse input.');
+        setError(error instanceof Error ? error.message : 'Unable to read the file.');
     }
 }
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Presently Journal Reader</title>
-    <meta name="description" content="Parse Presently CSV exports without breaking multiline journal entries.">
+    <meta name="description" content="Read Presently CSV exports without breaking multiline journal entries.">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -17,17 +17,17 @@
         <section class="hero card">
             <div>
                 <p class="eyebrow">Presently export reader</p>
-                <h1>Parse journal entries without splitting on commas or line breaks.</h1>
-                <p class="lede">Drop in a Presently CSV export or paste text. Dates mark the only entry boundary.</p>
+                <h1>Read journal entries without splitting on commas or line breaks.</h1>
+                <p class="lede">Drop in a Presently CSV export or paste text. Dates mark the start of each entry.</p>
             </div>
             <div class="hero-stats">
                 <div class="stat">
                     <span id="entryCount">0</span>
-                    <label>entries parsed</label>
+                    <label>entries found</label>
                 </div>
                 <div class="stat">
                     <span id="lineCount">0</span>
-                    <label>lines processed</label>
+                    <label>lines read</label>
                 </div>
             </div>
         </section>
@@ -48,7 +48,7 @@
                 <textarea id="sourceInput" spellcheck="false" aria-label="CSV input"></textarea>
 
                 <div class="actions">
-                    <button id="parseButton" type="button">Parse entries</button>
+                    <button id="parseButton" type="button">Read entries</button>
                 </div>
 
                 <div class="json-card">
@@ -66,8 +66,8 @@
         <section class="card results">
             <div class="panel-header">
                 <div>
-                    <h2>Parsed entries</h2>
-                    <p>Each card preserves the original line breaks from the journal text.</p>
+                    <h2>Entries</h2>
+                    <p>Each card keeps the original line breaks from the journal text.</p>
                 </div>
             </div>
             <div id="resultsList" class="results-list"></div>
