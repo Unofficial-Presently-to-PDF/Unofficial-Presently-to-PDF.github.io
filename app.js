@@ -89,15 +89,17 @@ function render(entries) {
         return;
     }
 
-    resultsList.innerHTML = entries.map((entry, index) => `
-    <article class="entry-card">
-      <header>
-        <time datetime="${entry.entryDate}">${entry.entryDate}</time>
-        <span class="index">#${index + 1}</span>
-      </header>
-      <pre>${escapeHtml(entry.entryContent)}</pre>
-    </article>
-  `).join('');
+        resultsList.innerHTML = entries.map((entry, index) => `
+        <article class="entry-card">
+            <details class="entry-details">
+                <summary>
+                    <time datetime="${entry.entryDate}">${entry.entryDate}</time>
+                    <span class="index">#${index + 1}</span>
+                </summary>
+                <pre>${escapeHtml(entry.entryContent)}</pre>
+            </details>
+        </article>
+    `).join('');
 }
 
 function escapeHtml(value) {
