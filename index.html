@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Presently Journal Reader</title>
+    <meta name="description" content="Parse Presently CSV exports without breaking multiline journal entries.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="backdrop backdrop-one"></div>
+    <div class="backdrop backdrop-two"></div>
+
+    <main class="shell">
+        <section class="hero card">
+            <div>
+                <p class="eyebrow">Presently export reader</p>
+                <h1>Parse journal entries without splitting on commas or line breaks.</h1>
+                <p class="lede">Drop in a Presently CSV export or paste text. Dates mark the only entry boundary.</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span id="entryCount">0</span>
+                    <label>entries parsed</label>
+                </div>
+                <div class="stat">
+                    <span id="lineCount">0</span>
+                    <label>lines processed</label>
+                </div>
+            </div>
+        </section>
+
+        <section class="workspace">
+            <section class="card panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Input</h2>
+                        <p>Upload a CSV or paste the raw export text.</p>
+                    </div>
+                    <label class="file-button">
+                        <input id="fileInput" type="file" accept=".csv,text/csv">
+                        Choose file
+                    </label>
+                </div>
+
+                <textarea id="sourceInput" spellcheck="false" aria-label="CSV input"></textarea>
+
+                <div class="actions">
+                    <button id="parseButton" type="button">Parse entries</button>
+                    <button id="copyJsonButton" type="button" class="secondary">Copy JSON</button>
+                </div>
+
+                <p id="errorBanner" class="error-banner" hidden></p>
+            </section>
+
+            <aside class="card side-panel">
+                <h2>Rules</h2>
+                <ul>
+                    <li>The first non-empty line must be <strong>entryDate,entryContent</strong>.</li>
+                    <li>Each new entry starts on a line beginning with a date like <strong>2026-04-03</strong>.</li>
+                    <li>Everything after that date belongs to the entry until the next dated line.</li>
+                </ul>
+                <div class="json-card">
+                    <div class="json-card-header">
+                        <h3>JSON output</h3>
+                        <button id="copyPreviewButton" type="button" class="ghost">Copy</button>
+                    </div>
+                    <pre id="jsonPreview">[]</pre>
+                </div>
+            </aside>
+        </section>
+
+        <section class="card results">
+            <div class="panel-header">
+                <div>
+                    <h2>Parsed entries</h2>
+                    <p>Each card preserves the original line breaks from the journal text.</p>
+                </div>
+            </div>
+            <div id="resultsList" class="results-list"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
