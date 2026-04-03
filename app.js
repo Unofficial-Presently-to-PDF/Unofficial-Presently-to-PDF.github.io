@@ -12,6 +12,9 @@ const dateFromInput = document.getElementById('dateFrom');
 const dateToInput = document.getElementById('dateTo');
 const dateRangeHint = document.getElementById('dateRangeHint');
 const entryOrder = document.getElementById('entryOrder');
+const dateFormat = document.getElementById('dateFormat');
+const includeWeekdayInput = document.getElementById('includeWeekday');
+const MONTH_ABBR_WITH_PERIOD = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
 
 let uploadedCsvText = '';
 let allEntries = [];
@@ -91,6 +94,56 @@ function getYear(entryDate) {
     return entryDate.slice(0, 4);
 }
 
+function updateWeekdayToggleState() {
+    const choice = dateFormat.value || 'iso';
+    const canIncludeWeekday = choice === 'long' || choice === 'short';
+
+    includeWeekdayInput.disabled = !canIncludeWeekday;
+    if (!canIncludeWeekday) {
+        includeWeekdayInput.checked = false;
+    }
+}
+
+function formatEntryDate(entryDate) {
+    const [yearStr, monthStr, dayStr] = entryDate.split('-');
+    const year = Number(yearStr);
+    const month = Number(monthStr);
+    const day = Number(dayStr);
+    const choice = dateFormat.value || 'iso';
+    const date = new Date(Date.UTC(year, month - 1, day));
+    let formatted = entryDate;
+
+    if (choice === 'long') {
+        formatted = new Intl.DateTimeFormat('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            timeZone: 'UTC'
+        }).format(date);
+    } else if (choice === 'short') {
+        formatted = `${MONTH_ABBR_WITH_PERIOD[month - 1]} ${day}, ${year}`;
+    } else if (choice === 'us') {
+        formatted = new Intl.DateTimeFormat('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric',
+            timeZone: 'UTC'
+        }).format(date);
+    }
+
+    const canIncludeWeekday = choice === 'long' || choice === 'short';
+    if (!canIncludeWeekday || !includeWeekdayInput.checked) {
+        return formatted;
+    }
+
+    const weekday = new Intl.DateTimeFormat('en-US', {
+        weekday: choice === 'short' ? 'short' : 'long',
+        timeZone: 'UTC'
+    }).format(date);
+
+    return `${weekday}, ${formatted}`;
+}
+
 function updateYearOptions(entries) {
     const years = Array.from(new Set(entries.map((entry) => getYear(entry.entryDate)))).sort((a, b) => b.localeCompare(a));
     const previousSelection = yearFilter.value || 'all';
@@ -149,7 +202,7 @@ function updateDateRangeOptions(entries) {
         dateToInput.value = dateFromInput.value;
     }
 
-    dateRangeHint.textContent = `Available range: ${minDate} to ${maxDate}`;
+    dateRangeHint.textContent = `Available range: ${formatEntryDate(minDate)} to ${formatEntryDate(maxDate)}`;
 }
 
 function applySettings(entries) {
@@ -197,7 +250,7 @@ function render(entries) {
     resultsList.innerHTML = entries.map((entry, index) => `
         <article class="entry-card">
             <header>
-                <time datetime="${entry.entryDate}">${entry.entryDate}</time>
+                <time datetime="${entry.entryDate}">${formatEntryDate(entry.entryDate)}</time>
                 <span class="index">#${index + 1}</span>
             </header>
             <pre>${escapeHtml(entry.entryContent)}</pre>
@@ -305,7 +358,7 @@ function buildBookPdf(entries, title) {
         doc.setFont('times', 'bold');
         doc.setFontSize(18);
         doc.setTextColor(32, 43, 61);
-        doc.text(entry.entryDate, marginX, cursorY);
+        doc.text(formatEntryDate(entry.entryDate), marginX, cursorY);
         cursorY += 18;
 
         doc.setFont('times', 'normal');
@@ -401,6 +454,16 @@ entryOrder.addEventListener('change', () => {
     refreshPreview();
 });
 
+dateFormat.addEventListener('change', () => {
+    updateWeekdayToggleState();
+    refreshPreview();
+});
+
+includeWeekdayInput.addEventListener('change', () => {
+    refreshPreview();
+});
+
 updateYearOptions(allEntries);
+updateWeekdayToggleState();
 updateDateRangeOptions(allEntries);
 render([]);
