@@ -132,45 +132,29 @@ function buildBookPdf(entries, title) {
     const bottomMargin = 56;
     const contentWidth = pageWidth - marginX * 2;
     let pageNumber = 0;
+    let cursorY = topMargin;
 
-    function startPage(fillColor = [251, 250, 246]) {
+    function addNewPage() {
         if (pageNumber > 0) {
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.setTextColor(122, 131, 145);
+            doc.text(String(pageNumber), pageWidth - marginX, pageHeight - 28, { align: 'right' });
             doc.addPage();
+        } else {
+            pageNumber = 1;
         }
 
         pageNumber += 1;
-        doc.setFillColor(fillColor[0], fillColor[1], fillColor[2]);
+        doc.setFillColor(251, 250, 246);
         doc.rect(0, 0, pageWidth, pageHeight, 'F');
-    }
-
-    function addFooter() {
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        doc.setTextColor(122, 131, 145);
-        doc.text(String(pageNumber), pageWidth - marginX, pageHeight - 28, { align: 'right' });
-    }
-
-    function drawHeader(headerTitle, subTitle) {
-        doc.setFont('times', 'bold');
-        doc.setFontSize(22);
-        doc.setTextColor(28, 37, 52);
-        doc.text(headerTitle, marginX, topMargin);
-
-        if (subTitle) {
-            doc.setFont('times', 'normal');
-            doc.setFontSize(11);
-            doc.setTextColor(93, 102, 116);
-            const subtitleLines = doc.splitTextToSize(subTitle, contentWidth);
-            doc.text(subtitleLines, marginX, topMargin + 24);
-        }
-
-        doc.setDrawColor(213, 218, 226);
-        doc.setLineWidth(1);
-        doc.line(marginX, topMargin + 44, pageWidth - marginX, topMargin + 44);
+        cursorY = topMargin;
     }
 
     function drawCover() {
-        startPage([247, 245, 239]);
+        doc.setFillColor(247, 245, 239);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        pageNumber = 1;
 
         doc.setFont('times', 'bold');
         doc.setFontSize(32);
@@ -184,52 +168,63 @@ function buildBookPdf(entries, title) {
         doc.text(lines, marginX, 188);
         doc.text(`${entries.length} entries`, marginX, 244);
 
-        addFooter();
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(122, 131, 145);
+        doc.text(String(pageNumber), pageWidth - marginX, pageHeight - 28, { align: 'right' });
     }
 
-    function startEntryPage(entry, index, continued = false) {
-        startPage();
-        drawHeader(title, `Entry ${index + 1} of ${entries.length}${continued ? ' continued' : ''}`);
+    function checkPageBreak(spaceNeeded = 20) {
+        if (cursorY + spaceNeeded > pageHeight - bottomMargin) {
+            addNewPage();
+        }
+    }
+
+    drawCover();
+    addNewPage();
+
+    entries.forEach((entry, index) => {
+        checkPageBreak(28);
+
+        doc.setDrawColor(213, 218, 226);
+        doc.setLineWidth(0.5);
+        doc.line(marginX, cursorY, pageWidth - marginX, cursorY);
+        cursorY += 16;
 
         doc.setFont('times', 'bold');
         doc.setFontSize(18);
         doc.setTextColor(32, 43, 61);
-        doc.text(entry.entryDate, marginX, topMargin + 72);
+        doc.text(entry.entryDate, marginX, cursorY);
+        cursorY += 28;
+
         doc.setFont('times', 'normal');
         doc.setFontSize(12);
         doc.setTextColor(42, 48, 59);
-    }
 
-    drawCover();
-
-    entries.forEach((entry, index) => {
-        startEntryPage(entry, index);
-
-        let cursorY = topMargin + 106;
         const paragraphs = entry.entryContent.split('\n');
 
-        paragraphs.forEach((paragraph) => {
-            const wrappedLines = paragraph ? doc.splitTextToSize(paragraph, contentWidth) : [''];
+        paragraphs.forEach((paragraph, pIdx) => {
+            if (paragraph === '') {
+                cursorY += 8;
+                return;
+            }
+
+            const wrappedLines = doc.splitTextToSize(paragraph, contentWidth);
 
             wrappedLines.forEach((line) => {
-                if (cursorY > pageHeight - bottomMargin) {
-                    addFooter();
-                    startEntryPage(entry, index, true);
-                    cursorY = topMargin + 106;
-                }
-
-                if (line === '') {
-                    cursorY += 12;
-                    return;
-                }
-
+                checkPageBreak(18);
                 doc.text(line, marginX, cursorY);
                 cursorY += 18;
             });
         });
 
-        addFooter();
+        cursorY += 14;
     });
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(122, 131, 145);
+    doc.text(String(pageNumber), pageWidth - marginX, pageHeight - 28, { align: 'right' });
 
     const safeTitle = title.trim().replace(/[^a-z0-9\-\s]+/gi, '').replace(/\s+/g, '-').replace(/-+/g, '-').toLowerCase() || 'presently-journal';
     doc.save(`${safeTitle}.pdf`);
