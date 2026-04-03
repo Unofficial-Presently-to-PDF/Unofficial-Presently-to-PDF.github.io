@@ -259,6 +259,38 @@ function applySettings(entries) {
     return output;
 }
 
+function getExportTimeframeLabel() {
+    const selectedYear = yearFilter.value || 'all';
+    const selectedFrom = dateFromInput.value;
+    const selectedTo = dateToInput.value;
+
+    if (selectedFrom && selectedTo) {
+        return `Entries from ${formatEntryDate(selectedFrom)} to ${formatEntryDate(selectedTo)}`;
+    }
+
+    if (selectedFrom) {
+        return `Entries from ${formatEntryDate(selectedFrom)} onward`;
+    }
+
+    if (selectedTo) {
+        return `Entries through ${formatEntryDate(selectedTo)}`;
+    }
+
+    if (selectedYear !== 'all') {
+        return `Entries from ${selectedYear}`;
+    }
+
+    return '';
+}
+
+function toFileNameSegment(value) {
+    return value.trim()
+        .replace(/[^a-z0-9\-\s]+/gi, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .toLowerCase();
+}
+
 function render(entries) {
     currentEntries = entries;
     entryCount.textContent = String(entries.length);
@@ -340,6 +372,7 @@ function buildBookPdf(entries, title) {
         doc.setFillColor(247, 245, 239);
         doc.rect(0, 0, pageWidth, pageHeight, 'F');
         pageNumber = 1;
+        const timeframeLabel = getExportTimeframeLabel();
 
         doc.setFont('times', 'bold');
         doc.setFontSize(32);
@@ -351,7 +384,15 @@ function buildBookPdf(entries, title) {
         doc.setTextColor(85, 94, 108);
         const lines = doc.splitTextToSize('A book built from your Presently entries.', contentWidth * 0.75);
         doc.text(lines, marginX, 188);
-        doc.text(`${entries.length} entries`, marginX, 244);
+        if (timeframeLabel) {
+            doc.setFontSize(11);
+            doc.setTextColor(99, 108, 121);
+            const timeframeLines = doc.splitTextToSize(timeframeLabel, contentWidth * 0.75);
+            doc.text(timeframeLines, marginX, 218);
+        }
+        doc.setFontSize(13);
+        doc.setTextColor(85, 94, 108);
+        doc.text(`${entries.length} entries`, marginX, timeframeLabel ? 258 : 244);
 
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(9);
@@ -414,8 +455,10 @@ function buildBookPdf(entries, title) {
     doc.setTextColor(122, 131, 145);
     doc.text(String(pageNumber), pageWidth - marginX, pageHeight - 28, { align: 'right' });
 
-    const safeTitle = title.trim().replace(/[^a-z0-9\-\s]+/gi, '').replace(/\s+/g, '-').replace(/-+/g, '-').toLowerCase() || 'presently-journal';
-    doc.save(`${safeTitle}.pdf`);
+    const safeTitle = toFileNameSegment(title) || 'presently-journal';
+    const timeframeLabel = getExportTimeframeLabel();
+    const timeframeSuffix = timeframeLabel ? `-${toFileNameSegment(timeframeLabel)}` : '';
+    doc.save(`${safeTitle}${timeframeSuffix}.pdf`);
 }
 
 buildPdfButton.addEventListener('click', () => {
