@@ -8,6 +8,9 @@ const errorBanner = document.getElementById('errorBanner');
 const entryCount = document.getElementById('entryCount');
 const yearFilterWrap = document.getElementById('yearFilterWrap');
 const yearFilter = document.getElementById('yearFilter');
+const dateFromInput = document.getElementById('dateFrom');
+const dateToInput = document.getElementById('dateTo');
+const dateRangeHint = document.getElementById('dateRangeHint');
 const entryOrder = document.getElementById('entryOrder');
 
 let uploadedCsvText = '';
@@ -104,13 +107,72 @@ function updateYearOptions(entries) {
     yearFilter.value = years.includes(previousSelection) ? previousSelection : 'all';
 }
 
+function updateDateRangeOptions(entries) {
+    const selectedYear = yearFilter.value || 'all';
+    const yearScopedEntries = selectedYear === 'all'
+        ? entries
+        : entries.filter((entry) => getYear(entry.entryDate) === selectedYear);
+
+    if (yearScopedEntries.length === 0) {
+        dateFromInput.disabled = true;
+        dateToInput.disabled = true;
+        dateFromInput.value = '';
+        dateToInput.value = '';
+        dateFromInput.min = '';
+        dateFromInput.max = '';
+        dateToInput.min = '';
+        dateToInput.max = '';
+        dateRangeHint.textContent = 'Upload a file to enable date settings.';
+        return;
+    }
+
+    const sortedDates = yearScopedEntries.map((entry) => entry.entryDate).sort((a, b) => a.localeCompare(b));
+    const minDate = sortedDates[0];
+    const maxDate = sortedDates[sortedDates.length - 1];
+
+    dateFromInput.disabled = false;
+    dateToInput.disabled = false;
+    dateFromInput.min = minDate;
+    dateFromInput.max = maxDate;
+    dateToInput.min = minDate;
+    dateToInput.max = maxDate;
+
+    if (dateFromInput.value && (dateFromInput.value < minDate || dateFromInput.value > maxDate)) {
+        dateFromInput.value = minDate;
+    }
+
+    if (dateToInput.value && (dateToInput.value < minDate || dateToInput.value > maxDate)) {
+        dateToInput.value = maxDate;
+    }
+
+    if (dateFromInput.value && dateToInput.value && dateFromInput.value > dateToInput.value) {
+        dateToInput.value = dateFromInput.value;
+    }
+
+    dateRangeHint.textContent = `Available range: ${minDate} to ${maxDate}`;
+}
+
 function applySettings(entries) {
     const selectedYear = yearFilter.value || 'all';
+    const selectedFrom = dateFromInput.value;
+    const selectedTo = dateToInput.value;
     const selectedOrder = entryOrder.value || 'desc';
+
+    if (selectedFrom && selectedTo && selectedFrom > selectedTo) {
+        throw new Error('Start date must be on or before end date.');
+    }
 
     let output = entries;
     if (selectedYear !== 'all') {
         output = output.filter((entry) => getYear(entry.entryDate) === selectedYear);
+    }
+
+    if (selectedFrom) {
+        output = output.filter((entry) => entry.entryDate >= selectedFrom);
+    }
+
+    if (selectedTo) {
+        output = output.filter((entry) => entry.entryDate <= selectedTo);
     }
 
     output = [...output].sort((a, b) => selectedOrder === 'asc'
@@ -125,7 +187,10 @@ function render(entries) {
     entryCount.textContent = String(entries.length);
 
     if (entries.length === 0) {
-        resultsList.innerHTML = '<div class="empty-state">No entries yet. Load a file to create the book.</div>';
+        const hasSourceEntries = allEntries.length > 0;
+        resultsList.innerHTML = hasSourceEntries
+            ? '<div class="empty-state">No entries match your current settings.</div>'
+            : '<div class="empty-state">No entries yet. Load a file to create the book.</div>';
         return;
     }
 
@@ -141,7 +206,14 @@ function render(entries) {
 }
 
 function refreshPreview() {
-    render(applySettings(allEntries));
+    try {
+        updateDateRangeOptions(allEntries);
+        setError('');
+        render(applySettings(allEntries));
+    } catch (error) {
+        render([]);
+        setError(error instanceof Error ? error.message : 'Unable to apply current settings.');
+    }
 }
 
 function escapeHtml(value) {
@@ -317,9 +389,18 @@ yearFilter.addEventListener('change', () => {
     refreshPreview();
 });
 
+dateFromInput.addEventListener('change', () => {
+    refreshPreview();
+});
+
+dateToInput.addEventListener('change', () => {
+    refreshPreview();
+});
+
 entryOrder.addEventListener('change', () => {
     refreshPreview();
 });
 
 updateYearOptions(allEntries);
+updateDateRangeOptions(allEntries);
 render([]);

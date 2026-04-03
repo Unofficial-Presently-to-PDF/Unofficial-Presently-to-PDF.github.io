@@ -55,6 +55,14 @@
                             </select>
                         </div>
                         <div class="setting-field">
+                            <label class="field-label" for="dateFrom">Start date</label>
+                            <input id="dateFrom" class="select-input" type="date" disabled>
+                        </div>
+                        <div class="setting-field">
+                            <label class="field-label" for="dateTo">End date</label>
+                            <input id="dateTo" class="select-input" type="date" disabled>
+                        </div>
+                        <div class="setting-field">
                             <label class="field-label" for="entryOrder">Entry order</label>
                             <select id="entryOrder" class="select-input">
                                 <option value="desc">Newest first</option>
@@ -62,6 +70,7 @@
                             </select>
                         </div>
                     </div>
+                    <p id="dateRangeHint" class="settings-hint"></p>
                 </section>
 
                 <div class="actions">
