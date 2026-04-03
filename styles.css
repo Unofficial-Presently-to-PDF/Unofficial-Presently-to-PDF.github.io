@@ -245,6 +245,10 @@ h1 {
     accent-color: var(--accent-strong);
 }
 
+.is-hidden {
+    display: none !important;
+}
+
 .settings-hint {
     margin: 0.75rem 0 0;
     color: var(--muted);

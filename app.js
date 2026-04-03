@@ -14,6 +14,7 @@ const dateRangeHint = document.getElementById('dateRangeHint');
 const entryOrder = document.getElementById('entryOrder');
 const dateFormat = document.getElementById('dateFormat');
 const includeWeekdayInput = document.getElementById('includeWeekday');
+const includeWeekdayWrap = includeWeekdayInput.closest('.setting-field');
 const MONTH_ABBR_WITH_PERIOD = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
 
 let uploadedCsvText = '';
@@ -98,6 +99,7 @@ function updateWeekdayToggleState() {
     const choice = dateFormat.value || 'iso';
     const canIncludeWeekday = choice === 'long' || choice === 'short';
 
+    includeWeekdayWrap.classList.toggle('is-hidden', !canIncludeWeekday);
     includeWeekdayInput.disabled = !canIncludeWeekday;
     if (!canIncludeWeekday) {
         includeWeekdayInput.checked = false;
