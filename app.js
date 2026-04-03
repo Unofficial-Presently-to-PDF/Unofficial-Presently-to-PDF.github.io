@@ -3,7 +3,6 @@ const DATE_LINE_RE = /^(\d{4}-\d{2}-\d{2}),(.*)$/;
 const sourceInput = document.getElementById('sourceInput');
 const fileInput = document.getElementById('fileInput');
 const parseButton = document.getElementById('parseButton');
-const copyJsonButton = document.getElementById('copyJsonButton');
 const copyPreviewButton = document.getElementById('copyPreviewButton');
 const resultsList = document.getElementById('resultsList');
 const jsonPreview = document.getElementById('jsonPreview');
@@ -73,7 +72,7 @@ function parsePresentlyCsv(text) {
 }
 
 function toJson(entries) {
-    return JSON.stringify(entries, null, 2);
+    return JSON.stringify(entries);
 }
 
 function setError(message) {
@@ -143,14 +142,6 @@ fileInput.addEventListener('change', async () => {
 
     sourceInput.value = await file.text();
     parseAndRender();
-});
-
-copyJsonButton.addEventListener('click', async () => {
-    await copyText(lastJson);
-    copyJsonButton.textContent = 'Copied';
-    window.setTimeout(() => {
-        copyJsonButton.textContent = 'Copy JSON';
-    }, 1200);
 });
 
 copyPreviewButton.addEventListener('click', async () => {
