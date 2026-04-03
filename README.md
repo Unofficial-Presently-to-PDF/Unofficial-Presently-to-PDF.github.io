@@ -1,4 +1,4 @@
-#﻿# Presently Journal Reader
+# Presently Journal Reader
 
 This workspace now contains a small web app for turning Presently CSV exports into a book-style PDF.
 
