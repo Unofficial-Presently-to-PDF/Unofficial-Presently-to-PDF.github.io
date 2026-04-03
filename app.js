@@ -189,13 +189,13 @@ function buildBookPdf(entries, title) {
         doc.setDrawColor(213, 218, 226);
         doc.setLineWidth(0.5);
         doc.line(marginX, cursorY, pageWidth - marginX, cursorY);
-        cursorY += 16;
+        cursorY += 18;
 
         doc.setFont('times', 'bold');
         doc.setFontSize(18);
         doc.setTextColor(32, 43, 61);
         doc.text(entry.entryDate, marginX, cursorY);
-        cursorY += 28;
+        cursorY += 18;
 
         doc.setFont('times', 'normal');
         doc.setFontSize(12);
