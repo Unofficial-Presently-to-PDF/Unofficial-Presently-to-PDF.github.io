@@ -153,14 +153,10 @@ h1 {
 }
 
 .workspace {
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
-    gap: 1.25rem;
     margin-bottom: 1.25rem;
 }
 
 .panel,
-.side-panel,
 .results {
     padding: 1.25rem;
 }
@@ -174,7 +170,6 @@ h1 {
 }
 
 .panel-header p,
-.side-panel p,
 .results p {
     color: var(--muted);
     margin-bottom: 0;
@@ -254,20 +249,9 @@ textarea:focus {
     border: 1px solid rgba(255, 139, 167, 0.24);
 }
 
-.side-panel ul {
-    margin: 0 0 1rem;
-    padding-left: 1.1rem;
-    color: var(--muted);
-    line-height: 1.65;
-}
-
-.side-panel li+li {
-    margin-top: 0.5rem;
-}
-
 .json-card {
     margin-top: 1rem;
-    padding: 1rem;
+    padding: 0.85rem 1rem 0.95rem;
     border-radius: var(--radius-lg);
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -287,12 +271,17 @@ textarea:focus {
 pre {
     margin: 0;
     overflow: auto;
-    white-space: pre-wrap;
+    white-space: pre;
     word-break: break-word;
     line-height: 1.6;
     color: #dce7ff;
     font-family: "Cascadia Mono", "Consolas", monospace;
     font-size: 0.92rem;
+}
+
+#jsonPreview {
+    max-height: 11rem;
+    padding-top: 0.35rem;
 }
 
 .results-list {

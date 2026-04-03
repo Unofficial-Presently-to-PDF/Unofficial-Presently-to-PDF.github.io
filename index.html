@@ -49,27 +49,18 @@
 
                 <div class="actions">
                     <button id="parseButton" type="button">Parse entries</button>
-                    <button id="copyJsonButton" type="button" class="secondary">Copy JSON</button>
                 </div>
 
-                <p id="errorBanner" class="error-banner" hidden></p>
-            </section>
-
-            <aside class="card side-panel">
-                <h2>Rules</h2>
-                <ul>
-                    <li>The first non-empty line must be <strong>entryDate,entryContent</strong>.</li>
-                    <li>Each new entry starts on a line beginning with a date like <strong>2026-04-03</strong>.</li>
-                    <li>Everything after that date belongs to the entry until the next dated line.</li>
-                </ul>
                 <div class="json-card">
                     <div class="json-card-header">
-                        <h3>JSON output</h3>
+                        <h3>JSON</h3>
                         <button id="copyPreviewButton" type="button" class="ghost">Copy</button>
                     </div>
                     <pre id="jsonPreview">[]</pre>
                 </div>
-            </aside>
+
+                <p id="errorBanner" class="error-banner" hidden></p>
+            </section>
         </section>
 
         <section class="card results">
