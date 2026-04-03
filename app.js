@@ -496,18 +496,6 @@ settingsToggleButton.addEventListener('click', (event) => {
     setSettingsPanelOpen(!isOpen);
 });
 
-document.addEventListener('click', (event) => {
-    if (settingsPanel.classList.contains('is-hidden')) {
-        return;
-    }
-
-    const clickedToggle = settingsToggleButton.contains(event.target);
-    const clickedPanel = settingsPanel.contains(event.target);
-    if (!clickedToggle && !clickedPanel) {
-        setSettingsPanelOpen(false);
-    }
-});
-
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         setSettingsPanelOpen(false);
