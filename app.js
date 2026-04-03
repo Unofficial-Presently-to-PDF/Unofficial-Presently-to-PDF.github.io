@@ -169,6 +169,9 @@ function buildBookPdf(entries, title) {
     function checkPageBreak(spaceNeeded = 20) {
         if (cursorY + spaceNeeded > pageHeight - bottomMargin) {
             addNewPage();
+            doc.setFont('times', 'normal');
+            doc.setFontSize(12);
+            doc.setTextColor(42, 48, 59);
         }
     }
 
