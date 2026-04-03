@@ -48,11 +48,12 @@
                 <div class="actions">
                     <div class="settings-menu">
                         <button id="settingsToggleButton" class="icon-button secondary" type="button"
-                            aria-label="Open book settings" aria-expanded="false"
-                            aria-controls="settingsPanel">&#9881;</button>
+                            aria-label="Open book settings" aria-expanded="false" aria-controls="settingsPanel"
+                            disabled>&#9881;</button>
                     </div>
-                    <button id="buildPdfButton" type="button">Download book</button>
+                    <button id="buildPdfButton" type="button" disabled>Download book</button>
                 </div>
+                <p id="actionsHint" class="settings-hint actions-hint"></p>
 
                 <section id="settingsPanel" class="settings-panel settings-drawer is-hidden" aria-label="Book settings">
                     <h3>Book settings</h3>

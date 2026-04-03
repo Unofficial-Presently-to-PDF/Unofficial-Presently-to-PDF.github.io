@@ -255,6 +255,11 @@ h1 {
     font-size: 0.9rem;
 }
 
+.actions-hint {
+    margin-top: 0.8rem;
+    padding-top: 0.25rem;
+}
+
 .settings-menu {
     display: inline-flex;
 }
@@ -307,6 +312,12 @@ button {
 .file-button:hover,
 button:hover {
     transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .file-button input {

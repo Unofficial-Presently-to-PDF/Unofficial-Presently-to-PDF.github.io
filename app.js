@@ -5,6 +5,7 @@ const bookTitleInput = document.getElementById('bookTitle');
 const buildPdfButton = document.getElementById('buildPdfButton');
 const settingsToggleButton = document.getElementById('settingsToggleButton');
 const settingsPanel = document.getElementById('settingsPanel');
+const actionsHint = document.getElementById('actionsHint');
 const resultsList = document.getElementById('resultsList');
 const errorBanner = document.getElementById('errorBanner');
 const entryCount = document.getElementById('entryCount');
@@ -96,6 +97,20 @@ function setError(message) {
 function setSettingsPanelOpen(isOpen) {
     settingsPanel.classList.toggle('is-hidden', !isOpen);
     settingsToggleButton.setAttribute('aria-expanded', String(isOpen));
+}
+
+function updateActionAvailability() {
+    const hasEntries = allEntries.length > 0;
+    settingsToggleButton.disabled = !hasEntries;
+    buildPdfButton.disabled = !hasEntries;
+
+    if (!hasEntries) {
+        setSettingsPanelOpen(false);
+        actionsHint.textContent = 'Upload a CSV to enable settings and download.';
+        return;
+    }
+
+    actionsHint.textContent = 'Settings and download are enabled.';
 }
 
 function getYear(entryDate) {
@@ -427,6 +442,7 @@ fileInput.addEventListener('change', async () => {
         uploadedCsvText = '';
         allEntries = [];
         updateYearOptions(allEntries);
+        updateActionAvailability();
         refreshPreview();
         return;
     }
@@ -437,11 +453,13 @@ fileInput.addEventListener('change', async () => {
         allEntries = entries;
         setError('');
         updateYearOptions(allEntries);
+        updateActionAvailability();
         refreshPreview();
     } catch (error) {
         uploadedCsvText = '';
         allEntries = [];
         updateYearOptions(allEntries);
+        updateActionAvailability();
         refreshPreview();
         setError(error instanceof Error ? error.message : 'Unable to read the file.');
     }
@@ -499,5 +517,6 @@ document.addEventListener('keydown', (event) => {
 updateYearOptions(allEntries);
 updateWeekdayToggleState();
 updateDateRangeOptions(allEntries);
+updateActionAvailability();
 setSettingsPanelOpen(false);
 render([]);
