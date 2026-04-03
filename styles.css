@@ -161,6 +161,31 @@ h1 {
     padding: 1.25rem;
 }
 
+.field-label {
+    display: block;
+    margin: 0.5rem 0 0.45rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.text-input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(5, 10, 20, 0.52);
+    color: var(--text);
+    outline: none;
+    margin-bottom: 1rem;
+}
+
+.text-input:focus {
+    border-color: rgba(125, 211, 252, 0.55);
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.14);
+}
+
 .panel-header {
     display: flex;
     align-items: start;
@@ -249,41 +274,6 @@ textarea:focus {
     border: 1px solid rgba(255, 139, 167, 0.24);
 }
 
-.json-card {
-    margin-top: 1rem;
-    padding: 0.85rem 1rem 0.95rem;
-    border-radius: var(--radius-lg);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.json-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.json-card-header h3 {
-    margin-bottom: 0;
-}
-
-pre {
-    margin: 0;
-    overflow: auto;
-    white-space: pre;
-    word-break: break-word;
-    line-height: 1.6;
-    color: #dce7ff;
-    font-family: "Cascadia Mono", "Consolas", monospace;
-    font-size: 0.92rem;
-}
-
-#jsonPreview {
-    max-height: 11rem;
-    padding-top: 0.35rem;
-}
-
 .results-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -349,7 +339,6 @@ pre {
 
     .hero,
     .panel,
-    .side-panel,
     .results {
         padding: 1rem;
         border-radius: 20px;

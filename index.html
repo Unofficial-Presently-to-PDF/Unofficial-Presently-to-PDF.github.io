@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Presently Journal Reader</title>
-    <meta name="description" content="Read Presently CSV exports without breaking multiline journal entries.">
+    <title>Presently Journal Book Maker</title>
+    <meta name="description" content="Turn Presently CSV exports into a book-style PDF.">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 
 <body>
@@ -16,9 +17,10 @@
     <main class="shell">
         <section class="hero card">
             <div>
-                <p class="eyebrow">Presently export reader</p>
-                <h1>Read journal entries without splitting on commas or line breaks.</h1>
-                <p class="lede">Drop in a Presently CSV export or paste text. Dates mark the start of each entry.</p>
+                <p class="eyebrow">Presently book maker</p>
+                <h1>Turn journal entries into a clean PDF book.</h1>
+                <p class="lede">Drop in a Presently CSV export or paste text, then create a book-style PDF with one
+                    entry after another.</p>
             </div>
             <div class="hero-stats">
                 <div class="stat">
@@ -45,18 +47,13 @@
                     </label>
                 </div>
 
+                <label class="field-label" for="bookTitle">Book title</label>
+                <input id="bookTitle" class="text-input" type="text" value="My Presently Journal" maxlength="80">
+
                 <textarea id="sourceInput" spellcheck="false" aria-label="CSV input"></textarea>
 
                 <div class="actions">
-                    <button id="parseButton" type="button">Read entries</button>
-                </div>
-
-                <div class="json-card">
-                    <div class="json-card-header">
-                        <h3>JSON</h3>
-                        <button id="copyPreviewButton" type="button" class="ghost">Copy</button>
-                    </div>
-                    <pre id="jsonPreview">[]</pre>
+                    <button id="buildPdfButton" type="button">Create PDF book</button>
                 </div>
 
                 <p id="errorBanner" class="error-banner" hidden></p>
@@ -66,8 +63,8 @@
         <section class="card results">
             <div class="panel-header">
                 <div>
-                    <h2>Entries</h2>
-                    <p>Each card keeps the original line breaks from the journal text.</p>
+                    <h2>Book preview</h2>
+                    <p>Each card shows how the entry will appear in the PDF.</p>
                 </div>
             </div>
             <div id="resultsList" class="results-list"></div>
