@@ -45,6 +45,25 @@
                 <label class="field-label" for="bookTitle">Book title</label>
                 <input id="bookTitle" class="text-input" type="text" value="My Gratitude Journal" maxlength="80">
 
+                <section class="settings-panel" aria-label="Book settings">
+                    <h3>Book settings</h3>
+                    <div class="settings-grid">
+                        <div id="yearFilterWrap" class="setting-field" hidden>
+                            <label class="field-label" for="yearFilter">Export year</label>
+                            <select id="yearFilter" class="select-input">
+                                <option value="all">All years</option>
+                            </select>
+                        </div>
+                        <div class="setting-field">
+                            <label class="field-label" for="entryOrder">Entry order</label>
+                            <select id="entryOrder" class="select-input">
+                                <option value="desc">Newest first</option>
+                                <option value="asc">Oldest first</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
                 <div class="actions">
                     <button id="buildPdfButton" type="button">Download book</button>
                 </div>

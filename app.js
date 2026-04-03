@@ -6,8 +6,12 @@ const buildPdfButton = document.getElementById('buildPdfButton');
 const resultsList = document.getElementById('resultsList');
 const errorBanner = document.getElementById('errorBanner');
 const entryCount = document.getElementById('entryCount');
+const yearFilterWrap = document.getElementById('yearFilterWrap');
+const yearFilter = document.getElementById('yearFilter');
+const entryOrder = document.getElementById('entryOrder');
 
 let uploadedCsvText = '';
+let allEntries = [];
 let currentEntries = [];
 
 function normalizeLines(text) {
@@ -80,6 +84,42 @@ function setError(message) {
     errorBanner.textContent = message;
 }
 
+function getYear(entryDate) {
+    return entryDate.slice(0, 4);
+}
+
+function updateYearOptions(entries) {
+    const years = Array.from(new Set(entries.map((entry) => getYear(entry.entryDate)))).sort((a, b) => b.localeCompare(a));
+    const previousSelection = yearFilter.value || 'all';
+
+    if (years.length <= 1) {
+        yearFilterWrap.hidden = true;
+        yearFilter.innerHTML = '<option value="all">All years</option>';
+        yearFilter.value = 'all';
+        return;
+    }
+
+    yearFilterWrap.hidden = false;
+    yearFilter.innerHTML = ['<option value="all">All years</option>', ...years.map((year) => `<option value="${year}">${year}</option>`)].join('');
+    yearFilter.value = years.includes(previousSelection) ? previousSelection : 'all';
+}
+
+function applySettings(entries) {
+    const selectedYear = yearFilter.value || 'all';
+    const selectedOrder = entryOrder.value || 'desc';
+
+    let output = entries;
+    if (selectedYear !== 'all') {
+        output = output.filter((entry) => getYear(entry.entryDate) === selectedYear);
+    }
+
+    output = [...output].sort((a, b) => selectedOrder === 'asc'
+        ? a.entryDate.localeCompare(b.entryDate)
+        : b.entryDate.localeCompare(a.entryDate));
+
+    return output;
+}
+
 function render(entries) {
     currentEntries = entries;
     entryCount.textContent = String(entries.length);
@@ -98,6 +138,10 @@ function render(entries) {
             <pre>${escapeHtml(entry.entryContent)}</pre>
         </article>
     `).join('');
+}
+
+function refreshPreview() {
+    render(applySettings(allEntries));
 }
 
 function escapeHtml(value) {
@@ -227,7 +271,8 @@ function buildBookPdf(entries, title) {
 
 buildPdfButton.addEventListener('click', () => {
     try {
-        const entries = currentEntries.length > 0 ? currentEntries : parsePresentlyCsv(uploadedCsvText);
+        const parsedEntries = allEntries.length > 0 ? allEntries : parsePresentlyCsv(uploadedCsvText);
+        const entries = applySettings(parsedEntries);
         const title = bookTitleInput.value.trim() || 'My Presently Journal';
         setError('');
         render(entries);
@@ -246,20 +291,35 @@ fileInput.addEventListener('change', async () => {
     const file = fileInput.files?.[0];
     if (!file) {
         uploadedCsvText = '';
-        render([]);
+        allEntries = [];
+        updateYearOptions(allEntries);
+        refreshPreview();
         return;
     }
 
     try {
         uploadedCsvText = await file.text();
         const entries = parsePresentlyCsv(uploadedCsvText);
+        allEntries = entries;
         setError('');
-        render(entries);
+        updateYearOptions(allEntries);
+        refreshPreview();
     } catch (error) {
         uploadedCsvText = '';
-        render([]);
+        allEntries = [];
+        updateYearOptions(allEntries);
+        refreshPreview();
         setError(error instanceof Error ? error.message : 'Unable to read the file.');
     }
 });
 
+yearFilter.addEventListener('change', () => {
+    refreshPreview();
+});
+
+entryOrder.addEventListener('change', () => {
+    refreshPreview();
+});
+
+updateYearOptions(allEntries);
 render([]);
