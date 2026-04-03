@@ -179,7 +179,7 @@ function buildBookPdf(entries, title) {
     addNewPage();
 
     entries.forEach((entry, index) => {
-        checkPageBreak(28);
+        checkPageBreak(54);
 
         doc.setDrawColor(213, 218, 226);
         doc.setLineWidth(0.5);
