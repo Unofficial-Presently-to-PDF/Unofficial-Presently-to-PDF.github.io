@@ -255,6 +255,22 @@ h1 {
     font-size: 0.9rem;
 }
 
+.settings-menu {
+    display: inline-flex;
+}
+
+.settings-drawer {
+    margin-top: 0.9rem;
+}
+
+.icon-button {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
 .panel-header {
     display: flex;
     align-items: start;
@@ -468,4 +484,5 @@ textarea:focus {
     .actions .file-button {
         width: 100%;
     }
+
 }

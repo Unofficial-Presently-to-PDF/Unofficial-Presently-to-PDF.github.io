@@ -3,6 +3,8 @@ const DATE_LINE_RE = /^(\d{4}-\d{2}-\d{2}),(.*)$/;
 const fileInput = document.getElementById('fileInput');
 const bookTitleInput = document.getElementById('bookTitle');
 const buildPdfButton = document.getElementById('buildPdfButton');
+const settingsToggleButton = document.getElementById('settingsToggleButton');
+const settingsPanel = document.getElementById('settingsPanel');
 const resultsList = document.getElementById('resultsList');
 const errorBanner = document.getElementById('errorBanner');
 const entryCount = document.getElementById('entryCount');
@@ -89,6 +91,11 @@ function setError(message) {
 
     errorBanner.hidden = false;
     errorBanner.textContent = message;
+}
+
+function setSettingsPanelOpen(isOpen) {
+    settingsPanel.classList.toggle('is-hidden', !isOpen);
+    settingsToggleButton.setAttribute('aria-expanded', String(isOpen));
 }
 
 function getYear(entryDate) {
@@ -465,7 +472,32 @@ includeWeekdayInput.addEventListener('change', () => {
     refreshPreview();
 });
 
+settingsToggleButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const isOpen = !settingsPanel.classList.contains('is-hidden');
+    setSettingsPanelOpen(!isOpen);
+});
+
+document.addEventListener('click', (event) => {
+    if (settingsPanel.classList.contains('is-hidden')) {
+        return;
+    }
+
+    const clickedToggle = settingsToggleButton.contains(event.target);
+    const clickedPanel = settingsPanel.contains(event.target);
+    if (!clickedToggle && !clickedPanel) {
+        setSettingsPanelOpen(false);
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        setSettingsPanelOpen(false);
+    }
+});
+
 updateYearOptions(allEntries);
 updateWeekdayToggleState();
 updateDateRangeOptions(allEntries);
+setSettingsPanelOpen(false);
 render([]);

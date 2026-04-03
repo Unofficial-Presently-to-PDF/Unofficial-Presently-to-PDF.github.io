@@ -45,7 +45,16 @@
                 <label class="field-label" for="bookTitle">Book title</label>
                 <input id="bookTitle" class="text-input" type="text" value="My Gratitude Journal" maxlength="80">
 
-                <section class="settings-panel" aria-label="Book settings">
+                <div class="actions">
+                    <div class="settings-menu">
+                        <button id="settingsToggleButton" class="icon-button secondary" type="button"
+                            aria-label="Open book settings" aria-expanded="false"
+                            aria-controls="settingsPanel">&#9881;</button>
+                    </div>
+                    <button id="buildPdfButton" type="button">Download book</button>
+                </div>
+
+                <section id="settingsPanel" class="settings-panel settings-drawer is-hidden" aria-label="Book settings">
                     <h3>Book settings</h3>
                     <div class="settings-grid">
                         <div id="yearFilterWrap" class="setting-field" hidden>
@@ -87,10 +96,6 @@
                     </div>
                     <p id="dateRangeHint" class="settings-hint"></p>
                 </section>
-
-                <div class="actions">
-                    <button id="buildPdfButton" type="button">Download book</button>
-                </div>
 
                 <p id="errorBanner" class="error-banner" hidden></p>
             </section>
