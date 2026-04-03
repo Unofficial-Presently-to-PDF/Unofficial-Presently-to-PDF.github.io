@@ -19,8 +19,8 @@
             <div>
                 <p class="eyebrow">Presently book maker</p>
                 <h1>Turn journal entries into a book.</h1>
-                <p class="lede">Upload your Presently CSV export or paste text, then create a book-style PDF with one
-                    entry after another.</p>
+                <p class="lede">Upload your Presently CSV export then create a book-style PDF with one entry after
+                    another.</p>
             </div>
             <div class="hero-stats">
                 <div class="stat">
@@ -35,7 +35,7 @@
                 <div class="panel-header">
                     <div>
                         <h2>Input</h2>
-                        <p>Upload a CSV or paste the raw export text.</p>
+                        <p>Upload your Presently CSV export.</p>
                     </div>
                     <label class="file-button">
                         <input id="fileInput" type="file" accept=".csv,text/csv">
@@ -45,8 +45,6 @@
 
                 <label class="field-label" for="bookTitle">Book title</label>
                 <input id="bookTitle" class="text-input" type="text" value="My Gratitude Journal" maxlength="80">
-
-                <textarea id="sourceInput" spellcheck="false" aria-label="CSV input"></textarea>
 
                 <div class="actions">
                     <button id="buildPdfButton" type="button">Download book</button>

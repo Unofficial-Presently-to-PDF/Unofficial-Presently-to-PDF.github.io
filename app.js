@@ -1,12 +1,14 @@
 const DATE_LINE_RE = /^(\d{4}-\d{2}-\d{2}),(.*)$/;
 
-const sourceInput = document.getElementById('sourceInput');
 const fileInput = document.getElementById('fileInput');
 const bookTitleInput = document.getElementById('bookTitle');
 const buildPdfButton = document.getElementById('buildPdfButton');
 const resultsList = document.getElementById('resultsList');
 const errorBanner = document.getElementById('errorBanner');
 const entryCount = document.getElementById('entryCount');
+
+let uploadedCsvText = '';
+let currentEntries = [];
 
 function normalizeLines(text) {
     return text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
@@ -79,10 +81,11 @@ function setError(message) {
 }
 
 function render(entries) {
+    currentEntries = entries;
     entryCount.textContent = String(entries.length);
 
     if (entries.length === 0) {
-        resultsList.innerHTML = '<div class="empty-state">No entries yet. Load a file or paste text, then create the book.</div>';
+        resultsList.innerHTML = '<div class="empty-state">No entries yet. Load a file to create the book.</div>';
         return;
     }
 
@@ -104,17 +107,6 @@ function escapeHtml(value) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
-}
-
-function parseAndRender() {
-    try {
-        const text = sourceInput.value;
-        const entries = parsePresentlyCsv(text);
-        setError('');
-        render(entries, normalizeLines(text).length);
-    } catch (error) {
-        setError(error instanceof Error ? error.message : 'Unable to read the file.');
-    }
 }
 
 function buildBookPdf(entries, title) {
@@ -232,10 +224,10 @@ function buildBookPdf(entries, title) {
 
 buildPdfButton.addEventListener('click', () => {
     try {
-        const entries = parsePresentlyCsv(sourceInput.value);
+        const entries = currentEntries.length > 0 ? currentEntries : parsePresentlyCsv(uploadedCsvText);
         const title = bookTitleInput.value.trim() || 'My Presently Journal';
         setError('');
-        render(entries, normalizeLines(sourceInput.value).length);
+        render(entries);
 
         if (entries.length === 0) {
             throw new Error('Add entries before creating a PDF book.');
@@ -250,16 +242,21 @@ buildPdfButton.addEventListener('click', () => {
 fileInput.addEventListener('change', async () => {
     const file = fileInput.files?.[0];
     if (!file) {
+        uploadedCsvText = '';
+        render([]);
         return;
     }
 
-    sourceInput.value = await file.text();
-    parseAndRender();
+    try {
+        uploadedCsvText = await file.text();
+        const entries = parsePresentlyCsv(uploadedCsvText);
+        setError('');
+        render(entries);
+    } catch (error) {
+        uploadedCsvText = '';
+        render([]);
+        setError(error instanceof Error ? error.message : 'Unable to read the file.');
+    }
 });
 
-sourceInput.addEventListener('input', () => {
-    setError('');
-});
-
-sourceInput.value = '';
-render([], 0);
+render([]);
