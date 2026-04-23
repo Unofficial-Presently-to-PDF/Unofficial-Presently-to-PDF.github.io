@@ -779,7 +779,6 @@ function buildBookPdf(entries, title, styleKey = 'default') {
 
     function drawCover() {
         paintPageBackground(true);
-        pageNumber = 1;
         const timeframeLabel = getExportTimeframeLabel();
 
         drawRunningHeader(getJournalHeadingLabel());
@@ -812,6 +811,33 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         drawPageFooter();
     }
 
+    function drawSimpleCover() {
+        paintPageBackground(true);
+        pageNumber = 1;
+
+        const timeframeLabel = getExportTimeframeLabel();
+        const coverCenterX = pageWidth / 2;
+        const coverTitleY = pageHeight * 0.45;
+
+        doc.setFont(headingFont, 'bold');
+        doc.setFontSize(coverTitleSize + 8);
+        doc.setTextColor(...colors.text);
+        doc.text(title, coverCenterX, coverTitleY, { align: 'center' });
+
+        doc.setDrawColor(...colors.line);
+        doc.setLineWidth(1);
+        doc.line(coverCenterX - 86, coverTitleY + 18, coverCenterX + 86, coverTitleY + 18);
+
+        if (timeframeLabel) {
+            doc.setFont(bodyFont, 'normal');
+            doc.setFontSize(11);
+            doc.setTextColor(...colors.muted);
+            doc.text(timeframeLabel, coverCenterX, coverTitleY + 42, { align: 'center' });
+        }
+
+        drawPageFooter();
+    }
+
     function checkPageBreak(spaceNeeded = 20) {
         if (cursorY + spaceNeeded > pageHeight - bottomMargin) {
             addNewPage();
@@ -819,6 +845,9 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         }
     }
 
+    drawSimpleCover();
+    doc.addPage();
+    pageNumber = 2;
     drawCover();
     addNewPage();
 
