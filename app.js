@@ -371,7 +371,7 @@ function buildBookPdf(entries, title) {
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(9);
         doc.setTextColor(...colors.accent);
-        doc.text(label.toUpperCase(), marginX, 34);
+        doc.text(label, marginX, 34);
 
         doc.setDrawColor(...colors.line);
         doc.setLineWidth(0.75);
@@ -400,7 +400,12 @@ function buildBookPdf(entries, title) {
         }, 0);
 
         const paragraphBreaks = Math.max(0, entry.entryContent.split('\n').length - 1);
-        return 20 + 24 + 16 + (paragraphLines * 17) + (paragraphBreaks * 10) + 28;
+        return 20 + 20 + (paragraphLines * 17) + (paragraphBreaks * 10) + 24;
+    }
+
+    function getJournalHeadingLabel() {
+        const timeframeLabel = getExportTimeframeLabel();
+        return timeframeLabel ? `Journal - ${timeframeLabel}` : 'Journal';
     }
 
     function addNewPage() {
@@ -413,7 +418,7 @@ function buildBookPdf(entries, title) {
 
         pageNumber += 1;
         paintPageBackground();
-        drawRunningHeader('Journal');
+        drawRunningHeader(getJournalHeadingLabel());
         cursorY = topMargin;
     }
 
@@ -422,7 +427,7 @@ function buildBookPdf(entries, title) {
         pageNumber = 1;
         const timeframeLabel = getExportTimeframeLabel();
 
-        drawRunningHeader('Journal');
+        drawRunningHeader(getJournalHeadingLabel());
 
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(32);
@@ -490,12 +495,6 @@ function buildBookPdf(entries, title) {
         doc.setTextColor(28, 36, 48);
         doc.text(formatEntryDate(entry.entryDate), entryX, entryY);
         entryY += 18;
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(8.5);
-        doc.setTextColor(...colors.accent);
-        doc.text('Journal entry', entryX, entryY);
-        entryY += 14;
 
         setBodyFont(11.25);
 
