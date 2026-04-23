@@ -403,7 +403,7 @@ function buildBookPdf(entries, title) {
             return total + wrappedHeight + trailingGap;
         }, 0);
 
-        return 20 + 18 + bodyHeight + 12;
+        return 20 + 30 + bodyHeight + 12;
     }
 
     function getJournalHeadingLabel() {
@@ -497,7 +497,7 @@ function buildBookPdf(entries, title) {
         doc.setFontSize(16);
         doc.setTextColor(28, 36, 48);
         doc.text(formatEntryDate(entry.entryDate), entryX, entryY);
-        entryY += 18;
+        entryY += 30;
 
         setBodyFont(11.25);
 
