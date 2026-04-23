@@ -291,12 +291,66 @@ h1 {
     width: 100%;
     min-height: 40px;
     justify-content: flex-start;
-    padding: 0 0.9rem;
+    gap: 0.7rem;
+    padding: 0.5rem 0.65rem;
     border-radius: 12px;
     background: transparent;
     color: var(--text);
     font-weight: 700;
     text-align: left;
+}
+
+.picker-label {
+    line-height: 1.2;
+}
+
+.picker-thumb {
+    width: 56px;
+    height: 34px;
+    border-radius: 8px;
+    flex: 0 0 auto;
+    border: 1px solid rgba(179, 196, 255, 0.28);
+    position: relative;
+    overflow: hidden;
+}
+
+.picker-thumb::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+}
+
+.picker-thumb::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 9px;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(30, 41, 59, 0.75);
+    box-shadow:
+        0 7px 0 rgba(51, 65, 85, 0.65),
+        0 14px 0 rgba(51, 65, 85, 0.4);
+}
+
+.picker-thumb-default {
+    background: linear-gradient(180deg, #fbfdff, #f2f7ff);
+}
+
+.picker-thumb-default::before {
+    background: #0369a1;
+}
+
+.picker-thumb-ink {
+    background: #ffffff;
+}
+
+.picker-thumb-ink::before {
+    background: #4b5563;
 }
 
 .picker-option:hover {

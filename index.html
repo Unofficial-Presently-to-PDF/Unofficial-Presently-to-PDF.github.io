@@ -54,9 +54,14 @@
                             aria-label="Choose export style" aria-expanded="false" aria-controls="exportStylePanel"
                             disabled>&#128396;</button>
                         <div id="exportStylePanel" class="picker-menu is-hidden" aria-label="Export styles">
-                            <button type="button" class="picker-option is-active"
-                                data-export-style="default">Default</button>
-                            <button type="button" class="picker-option" data-export-style="ink">Ink saver</button>
+                            <button type="button" class="picker-option is-active" data-export-style="default">
+                                <span class="picker-thumb picker-thumb-default" aria-hidden="true"></span>
+                                <span class="picker-label">Default</span>
+                            </button>
+                            <button type="button" class="picker-option" data-export-style="ink">
+                                <span class="picker-thumb picker-thumb-ink" aria-hidden="true"></span>
+                                <span class="picker-label">Ink saver</span>
+                            </button>
                         </div>
                     </div>
                     <button id="buildPdfButton" type="button" disabled>Download book</button>
