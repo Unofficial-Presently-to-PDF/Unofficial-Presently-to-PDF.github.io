@@ -362,7 +362,7 @@ function buildBookPdf(entries, title) {
     };
 
     function setBodyFont(size = 12) {
-        doc.setFont('times', 'normal');
+        doc.setFont('helvetica', 'normal');
         doc.setFontSize(size);
         doc.setTextColor(38, 44, 55);
     }
@@ -424,8 +424,8 @@ function buildBookPdf(entries, title) {
 
         drawRunningHeader('Journal');
 
-        doc.setFont('times', 'bold');
-        doc.setFontSize(33);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(32);
         doc.setTextColor(...colors.text);
         doc.text(title, marginX, 152);
 
