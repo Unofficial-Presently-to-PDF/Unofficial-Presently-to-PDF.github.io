@@ -34,6 +34,10 @@ const EXPORT_STYLES = {
             line: [215, 219, 224],
             pageNumber: [129, 138, 150],
             accent: [3, 105, 161]
+        },
+        fonts: {
+            heading: 'helvetica',
+            body: 'helvetica'
         }
     },
     ink: {
@@ -46,6 +50,26 @@ const EXPORT_STYLES = {
             line: [206, 206, 206],
             pageNumber: [122, 122, 122],
             accent: [60, 60, 60]
+        },
+        fonts: {
+            heading: 'helvetica',
+            body: 'helvetica'
+        }
+    },
+    typewriter: {
+        label: 'Typewriter',
+        colors: {
+            paper: [252, 250, 245],
+            paperAccent: [248, 245, 237],
+            text: [31, 29, 26],
+            muted: [90, 84, 75],
+            line: [202, 196, 186],
+            pageNumber: [106, 100, 92],
+            accent: [78, 68, 54]
+        },
+        fonts: {
+            heading: 'courier',
+            body: 'courier'
         }
     }
 };
@@ -407,15 +431,17 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     let cursorY = topMargin;
 
     const colors = style.colors;
+    const headingFont = style.fonts?.heading || 'helvetica';
+    const bodyFont = style.fonts?.body || 'helvetica';
 
     function setBodyFont(size = 12) {
-        doc.setFont('helvetica', 'normal');
+        doc.setFont(bodyFont, 'normal');
         doc.setFontSize(size);
-        doc.setTextColor(38, 44, 55);
+        doc.setTextColor(...colors.text);
     }
 
     function drawRunningHeader(label) {
-        doc.setFont('helvetica', 'bold');
+        doc.setFont(headingFont, 'bold');
         doc.setFontSize(9);
         doc.setTextColor(...colors.accent);
         doc.text(label, marginX, 34);
@@ -426,7 +452,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     }
 
     function drawPageFooter() {
-        doc.setFont('helvetica', 'normal');
+        doc.setFont(bodyFont, 'normal');
         doc.setFontSize(9);
         doc.setTextColor(...colors.pageNumber);
         doc.text(String(pageNumber), pageWidth - marginX, pageHeight - 26, { align: 'right' });
@@ -479,7 +505,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
 
         drawRunningHeader(getJournalHeadingLabel());
 
-        doc.setFont('helvetica', 'bold');
+        doc.setFont(headingFont, 'bold');
         doc.setFontSize(32);
         doc.setTextColor(...colors.text);
         doc.text(title, marginX, 152);
@@ -488,7 +514,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         doc.setLineWidth(1);
         doc.line(marginX, 172, marginX + 118, 172);
 
-        doc.setFont('helvetica', 'normal');
+        doc.setFont(bodyFont, 'normal');
         doc.setFontSize(13);
         doc.setTextColor(...colors.muted);
         const lines = doc.splitTextToSize('A journal built from your entries.', contentWidth * 0.72);
@@ -499,7 +525,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
             const timeframeLines = doc.splitTextToSize(timeframeLabel, contentWidth * 0.72);
             doc.text(timeframeLines, marginX, 232);
         }
-        doc.setFont('helvetica', 'bold');
+        doc.setFont(headingFont, 'bold');
         doc.setFontSize(11);
         doc.setTextColor(...colors.muted);
         doc.text(`${entries.length} entries`, marginX, timeframeLabel ? 266 : 252);
@@ -540,9 +566,9 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         const entryX = marginX + innerPaddingX;
         let entryY = cursorY + innerPaddingTop + 2;
 
-        doc.setFont('helvetica', 'bold');
+        doc.setFont(headingFont, 'bold');
         doc.setFontSize(16);
-        doc.setTextColor(28, 36, 48);
+        doc.setTextColor(...colors.text);
         doc.text(formatEntryDate(entry.entryDate), entryX, entryY);
         entryY += 30;
 

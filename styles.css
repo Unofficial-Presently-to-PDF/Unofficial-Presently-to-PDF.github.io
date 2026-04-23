@@ -353,6 +353,22 @@ h1 {
     background: #4b5563;
 }
 
+.picker-thumb-typewriter {
+    background: linear-gradient(180deg, #f9f6ed, #f2ecde);
+    border-color: rgba(163, 148, 122, 0.45);
+}
+
+.picker-thumb-typewriter::before {
+    background: #5c4b38;
+}
+
+.picker-thumb-typewriter::after {
+    background: rgba(71, 57, 40, 0.78);
+    box-shadow:
+        0 7px 0 rgba(86, 69, 48, 0.55),
+        0 14px 0 rgba(86, 69, 48, 0.35);
+}
+
 .picker-option:hover {
     background: rgba(255, 255, 255, 0.06);
 }
