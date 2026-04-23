@@ -234,6 +234,7 @@ const EXPORT_STYLES = {
             accentStripe: false,
             sectionRule: false,
             notebookLines: true,
+            notebookLineOffset: 2,
             entryGap: 14,
             pageNumberAlign: 'right',
             runningHeader: true
@@ -695,6 +696,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     const showAccentStripe = layout.accentStripe !== false;
     const showSectionRule = layout.sectionRule !== false;
     const showNotebookLines = Boolean(layout.notebookLines);
+    const notebookLineOffset = layout.notebookLineOffset ?? 2;
     const isTimeline = Boolean(layout.timeline);
     const timelineOffset = layout.timelineOffset || 18;
     const pageNumberAlign = layout.pageNumberAlign || 'right';
@@ -875,7 +877,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         if (showNotebookLines) {
             doc.setDrawColor(...colors.line);
             doc.setLineWidth(0.55);
-            let lineY = entryY + (lineHeight * 0.2);
+            let lineY = entryY + notebookLineOffset;
             const bodyBottomY = cursorY + entryBlockHeight - 4;
             while (lineY < bodyBottomY) {
                 doc.line(entryX, lineY, entryX + innerWidth, lineY);
