@@ -358,7 +358,7 @@ function buildBookPdf(entries, title) {
         muted: [96, 104, 116],
         line: [215, 219, 224],
         pageNumber: [129, 138, 150],
-        accent: [56, 189, 248]
+        accent: [3, 105, 161]
     };
 
     function setBodyFont(size = 12) {
