@@ -813,7 +813,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
 
     function drawSimpleCover() {
         paintPageBackground(true);
-        pageNumber = 1;
+        pageNumber = 0;
 
         const timeframeLabel = getExportTimeframeLabel();
         const coverCenterX = pageWidth / 2;
@@ -835,7 +835,6 @@ function buildBookPdf(entries, title, styleKey = 'default') {
             doc.text(timeframeLabel, coverCenterX, coverTitleY + 42, { align: 'center' });
         }
 
-        drawPageFooter();
     }
 
     function checkPageBreak(spaceNeeded = 20) {
@@ -847,7 +846,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
 
     drawSimpleCover();
     doc.addPage();
-    pageNumber = 2;
+    pageNumber = 1;
     drawCover();
     addNewPage();
 
