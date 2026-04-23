@@ -40,6 +40,23 @@ const EXPORT_STYLES = {
             body: 'helvetica',
             date: 'helvetica',
             dateStyle: 'bold'
+        },
+        typography: {
+            coverTitleSize: 32,
+            coverBodySize: 13,
+            dateSize: 16,
+            bodySize: 11.25,
+            lineHeight: 17,
+            paragraphGap: 10,
+            emptyLineHeight: 10,
+            dateGap: 30
+        },
+        layout: {
+            card: true,
+            accentStripe: true,
+            entryGap: 8,
+            pageNumberAlign: 'right',
+            runningHeader: true
         }
     },
     ink: {
@@ -58,6 +75,23 @@ const EXPORT_STYLES = {
             body: 'helvetica',
             date: 'helvetica',
             dateStyle: 'bold'
+        },
+        typography: {
+            coverTitleSize: 32,
+            coverBodySize: 13,
+            dateSize: 16,
+            bodySize: 11,
+            lineHeight: 17,
+            paragraphGap: 9,
+            emptyLineHeight: 9,
+            dateGap: 28
+        },
+        layout: {
+            card: true,
+            accentStripe: false,
+            entryGap: 8,
+            pageNumberAlign: 'right',
+            runningHeader: true
         }
     },
     typewriter: {
@@ -76,6 +110,244 @@ const EXPORT_STYLES = {
             body: 'courier',
             date: 'courier',
             dateStyle: 'normal'
+        },
+        typography: {
+            coverTitleSize: 30,
+            coverBodySize: 12,
+            dateSize: 15,
+            bodySize: 10.75,
+            lineHeight: 17,
+            paragraphGap: 9,
+            emptyLineHeight: 9,
+            dateGap: 26
+        },
+        layout: {
+            card: true,
+            accentStripe: true,
+            entryGap: 8,
+            pageNumberAlign: 'right',
+            runningHeader: true
+        }
+    },
+    editorial: {
+        label: 'Minimal Editorial',
+        colors: {
+            paper: [255, 255, 255],
+            paperAccent: [255, 255, 255],
+            text: [22, 22, 22],
+            muted: [98, 98, 98],
+            line: [214, 214, 214],
+            pageNumber: [128, 128, 128],
+            accent: [76, 76, 76]
+        },
+        fonts: {
+            heading: 'helvetica',
+            body: 'helvetica',
+            date: 'helvetica',
+            dateStyle: 'bold'
+        },
+        typography: {
+            coverTitleSize: 33,
+            coverBodySize: 13,
+            dateSize: 15,
+            bodySize: 10.9,
+            lineHeight: 17,
+            paragraphGap: 9,
+            emptyLineHeight: 9,
+            dateGap: 22
+        },
+        layout: {
+            marginX: 72,
+            card: false,
+            accentStripe: false,
+            sectionRule: true,
+            entryGap: 14,
+            pageNumberAlign: 'center',
+            runningHeader: true
+        }
+    },
+    paperback: {
+        label: 'Warm Paperback',
+        colors: {
+            paper: [252, 248, 238],
+            paperAccent: [247, 242, 230],
+            text: [56, 44, 34],
+            muted: [114, 98, 83],
+            line: [214, 200, 182],
+            pageNumber: [130, 115, 101],
+            accent: [153, 123, 95]
+        },
+        fonts: {
+            heading: 'times',
+            body: 'times',
+            date: 'times',
+            dateStyle: 'bold'
+        },
+        typography: {
+            coverTitleSize: 33,
+            coverBodySize: 13,
+            dateSize: 17,
+            bodySize: 11.2,
+            lineHeight: 17,
+            paragraphGap: 10,
+            emptyLineHeight: 10,
+            dateGap: 26
+        },
+        layout: {
+            card: true,
+            cardRadius: 6,
+            accentStripe: false,
+            entryGap: 10,
+            pageNumberAlign: 'center',
+            runningHeader: true
+        }
+    },
+    notebook: {
+        label: 'Notebook',
+        colors: {
+            paper: [255, 255, 255],
+            paperAccent: [255, 255, 255],
+            text: [26, 34, 44],
+            muted: [94, 109, 126],
+            line: [204, 223, 240],
+            pageNumber: [116, 128, 142],
+            accent: [28, 100, 156]
+        },
+        fonts: {
+            heading: 'helvetica',
+            body: 'courier',
+            date: 'helvetica',
+            dateStyle: 'bold'
+        },
+        typography: {
+            coverTitleSize: 31,
+            coverBodySize: 13,
+            dateSize: 15,
+            bodySize: 10.8,
+            lineHeight: 17,
+            paragraphGap: 9,
+            emptyLineHeight: 9,
+            dateGap: 21
+        },
+        layout: {
+            card: false,
+            accentStripe: false,
+            sectionRule: false,
+            notebookLines: true,
+            entryGap: 14,
+            pageNumberAlign: 'right',
+            runningHeader: true
+        }
+    },
+    classic: {
+        label: 'Classic Book',
+        colors: {
+            paper: [255, 255, 255],
+            paperAccent: [255, 255, 255],
+            text: [30, 30, 30],
+            muted: [90, 90, 90],
+            line: [215, 215, 215],
+            pageNumber: [102, 102, 102],
+            accent: [92, 92, 92]
+        },
+        fonts: {
+            heading: 'times',
+            body: 'times',
+            date: 'times',
+            dateStyle: 'bold'
+        },
+        typography: {
+            coverTitleSize: 35,
+            coverBodySize: 13,
+            dateSize: 18,
+            bodySize: 11.5,
+            lineHeight: 18,
+            paragraphGap: 10,
+            emptyLineHeight: 10,
+            dateGap: 24
+        },
+        layout: {
+            marginX: 68,
+            card: false,
+            accentStripe: false,
+            sectionRule: true,
+            entryGap: 16,
+            pageNumberAlign: 'center',
+            runningHeader: false
+        }
+    },
+    zen: {
+        label: 'Zen Journal',
+        colors: {
+            paper: [253, 254, 254],
+            paperAccent: [248, 251, 250],
+            text: [40, 52, 56],
+            muted: [109, 124, 127],
+            line: [218, 226, 227],
+            pageNumber: [134, 146, 149],
+            accent: [80, 123, 122]
+        },
+        fonts: {
+            heading: 'helvetica',
+            body: 'helvetica',
+            date: 'helvetica',
+            dateStyle: 'bold'
+        },
+        typography: {
+            coverTitleSize: 31,
+            coverBodySize: 13,
+            dateSize: 14,
+            bodySize: 10.9,
+            lineHeight: 17,
+            paragraphGap: 10,
+            emptyLineHeight: 10,
+            dateGap: 26
+        },
+        layout: {
+            card: true,
+            cardRadius: 14,
+            accentStripe: false,
+            entryGap: 14,
+            pageNumberAlign: 'right',
+            runningHeader: true
+        }
+    },
+    timeline: {
+        label: 'Timeline',
+        colors: {
+            paper: [255, 255, 255],
+            paperAccent: [252, 254, 255],
+            text: [24, 38, 54],
+            muted: [95, 114, 128],
+            line: [205, 217, 227],
+            pageNumber: [120, 133, 145],
+            accent: [30, 102, 158]
+        },
+        fonts: {
+            heading: 'helvetica',
+            body: 'helvetica',
+            date: 'helvetica',
+            dateStyle: 'bold'
+        },
+        typography: {
+            coverTitleSize: 31,
+            coverBodySize: 13,
+            dateSize: 15,
+            bodySize: 10.9,
+            lineHeight: 17,
+            paragraphGap: 9,
+            emptyLineHeight: 9,
+            dateGap: 22
+        },
+        layout: {
+            card: false,
+            accentStripe: false,
+            sectionRule: false,
+            timeline: true,
+            timelineOffset: 18,
+            entryGap: 14,
+            pageNumberAlign: 'right',
+            runningHeader: true
         }
     }
 };
@@ -424,14 +696,16 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     }
 
     const style = getExportStyle(styleKey);
+    const layout = style.layout || {};
+    const typography = style.typography || {};
 
     const { jsPDF } = pdfApi;
     const doc = new jsPDF({ unit: 'pt', format: 'letter' });
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const marginX = 56;
-    const topMargin = 72;
-    const bottomMargin = 58;
+    const marginX = layout.marginX || 56;
+    const topMargin = layout.topMargin || 72;
+    const bottomMargin = layout.bottomMargin || 58;
     const contentWidth = pageWidth - marginX * 2;
     let pageNumber = 0;
     let cursorY = topMargin;
@@ -441,6 +715,27 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     const bodyFont = style.fonts?.body || 'helvetica';
     const dateFont = style.fonts?.date || headingFont;
     const dateFontStyle = style.fonts?.dateStyle || 'bold';
+    const coverTitleSize = typography.coverTitleSize || 32;
+    const coverBodySize = typography.coverBodySize || 13;
+    const dateSize = typography.dateSize || 16;
+    const bodySize = typography.bodySize || 11.25;
+    const lineHeight = typography.lineHeight || 17;
+    const paragraphGap = typography.paragraphGap || 10;
+    const emptyLineHeight = typography.emptyLineHeight || 10;
+    const dateGap = typography.dateGap || 30;
+    const entryTopPadding = layout.entryTopPadding || 18;
+    const entryBottomPadding = layout.entryBottomPadding || 12;
+    const entryInnerPaddingX = layout.entryInnerPaddingX || 18;
+    const entryGap = layout.entryGap || 8;
+    const cardRadius = layout.cardRadius || 10;
+    const showCard = layout.card !== false;
+    const showAccentStripe = layout.accentStripe !== false;
+    const showSectionRule = layout.sectionRule !== false;
+    const showNotebookLines = Boolean(layout.notebookLines);
+    const isTimeline = Boolean(layout.timeline);
+    const timelineOffset = layout.timelineOffset || 18;
+    const pageNumberAlign = layout.pageNumberAlign || 'right';
+    const showRunningHeader = layout.runningHeader !== false;
 
     function setBodyFont(size = 12) {
         doc.setFont(bodyFont, 'normal');
@@ -449,6 +744,10 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     }
 
     function drawRunningHeader(label) {
+        if (!showRunningHeader) {
+            return;
+        }
+
         doc.setFont(headingFont, 'bold');
         doc.setFontSize(9);
         doc.setTextColor(...colors.accent);
@@ -463,6 +762,11 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         doc.setFont(bodyFont, 'normal');
         doc.setFontSize(9);
         doc.setTextColor(...colors.pageNumber);
+        if (pageNumberAlign === 'center') {
+            doc.text(String(pageNumber), pageWidth / 2, pageHeight - 26, { align: 'center' });
+            return;
+        }
+
         doc.text(String(pageNumber), pageWidth - marginX, pageHeight - 26, { align: 'right' });
     }
 
@@ -472,19 +776,21 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     }
 
     function measureEntryHeight(entry, innerWidth) {
+        setBodyFont(bodySize);
+
         const paragraphs = entry.entryContent.split('\n');
         const bodyHeight = paragraphs.reduce((total, paragraph, index) => {
             if (paragraph === '') {
-                return total + 10;
+                return total + emptyLineHeight;
             }
 
             const wrappedLines = doc.splitTextToSize(paragraph, innerWidth);
-            const wrappedHeight = wrappedLines.length * 17;
-            const trailingGap = index < paragraphs.length - 1 ? 10 : 0;
+            const wrappedHeight = wrappedLines.length * lineHeight;
+            const trailingGap = index < paragraphs.length - 1 ? paragraphGap : 0;
             return total + wrappedHeight + trailingGap;
         }, 0);
 
-        return 20 + 30 + bodyHeight + 12;
+        return entryTopPadding + dateGap + bodyHeight + entryBottomPadding;
     }
 
     function getJournalHeadingLabel() {
@@ -514,7 +820,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         drawRunningHeader(getJournalHeadingLabel());
 
         doc.setFont(headingFont, 'bold');
-        doc.setFontSize(32);
+        doc.setFontSize(coverTitleSize);
         doc.setTextColor(...colors.text);
         doc.text(title, marginX, 152);
 
@@ -523,7 +829,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         doc.line(marginX, 172, marginX + 118, 172);
 
         doc.setFont(bodyFont, 'normal');
-        doc.setFontSize(13);
+        doc.setFontSize(coverBodySize);
         doc.setTextColor(...colors.muted);
         const lines = doc.splitTextToSize('A journal built from your entries.', contentWidth * 0.72);
         doc.text(lines, marginX, 198);
@@ -552,41 +858,73 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     addNewPage();
 
     entries.forEach((entry, index) => {
-        const innerPaddingX = 18;
-        const innerPaddingTop = 18;
-        const innerPaddingBottom = 18;
-        const innerWidth = contentWidth - (innerPaddingX * 2);
+        const innerWidth = showCard
+            ? contentWidth - (entryInnerPaddingX * 2)
+            : (isTimeline ? contentWidth - (timelineOffset + 26) : contentWidth);
         const entryBlockHeight = measureEntryHeight(entry, innerWidth);
 
         if (cursorY + entryBlockHeight > pageHeight - bottomMargin) {
             addNewPage();
-            setBodyFont(11.25);
+            setBodyFont(bodySize);
         }
 
-        doc.setDrawColor(...colors.line);
-        doc.setLineWidth(0.7);
-        doc.roundedRect(marginX, cursorY, contentWidth, entryBlockHeight, 10, 10, 'S');
+        let entryX = marginX;
+        let entryY = cursorY + entryTopPadding + 2;
 
-        doc.setDrawColor(...colors.accent);
-        doc.setLineWidth(2.2);
-        doc.line(marginX + 10, cursorY + 10, marginX + 10, cursorY + entryBlockHeight - 10);
+        if (showCard) {
+            doc.setDrawColor(...colors.line);
+            doc.setLineWidth(0.7);
+            doc.roundedRect(marginX, cursorY, contentWidth, entryBlockHeight, cardRadius, cardRadius, 'S');
 
-        const entryX = marginX + innerPaddingX;
-        let entryY = cursorY + innerPaddingTop + 2;
+            if (showAccentStripe) {
+                doc.setDrawColor(...colors.accent);
+                doc.setLineWidth(2.2);
+                doc.line(marginX + 10, cursorY + 10, marginX + 10, cursorY + entryBlockHeight - 10);
+            }
+
+            entryX = marginX + entryInnerPaddingX;
+        } else if (isTimeline) {
+            const timelineX = marginX + timelineOffset;
+            doc.setDrawColor(...colors.line);
+            doc.setLineWidth(1);
+            doc.line(timelineX, cursorY + 6, timelineX, cursorY + entryBlockHeight - 6);
+            doc.setFillColor(...colors.accent);
+            doc.circle(timelineX, entryY - 4, 2.8, 'F');
+            entryX = timelineX + 14;
+        } else {
+            entryX = marginX;
+            if (showSectionRule && index > 0) {
+                doc.setDrawColor(...colors.line);
+                doc.setLineWidth(0.7);
+                doc.line(marginX, cursorY + 2, pageWidth - marginX, cursorY + 2);
+                entryY += 10;
+            }
+        }
 
         doc.setFont(dateFont, dateFontStyle);
-        doc.setFontSize(16);
+        doc.setFontSize(dateSize);
         doc.setTextColor(...colors.text);
         doc.text(formatEntryDate(entry.entryDate), entryX, entryY);
-        entryY += 30;
+        entryY += dateGap;
 
-        setBodyFont(11.25);
+        setBodyFont(bodySize);
+
+        if (showNotebookLines) {
+            doc.setDrawColor(...colors.line);
+            doc.setLineWidth(0.55);
+            let lineY = entryY + (lineHeight * 0.2);
+            const bodyBottomY = cursorY + entryBlockHeight - 4;
+            while (lineY < bodyBottomY) {
+                doc.line(entryX, lineY, entryX + innerWidth, lineY);
+                lineY += lineHeight;
+            }
+        }
 
         const paragraphs = entry.entryContent.split('\n');
 
         paragraphs.forEach((paragraph, pIdx) => {
             if (paragraph === '') {
-                entryY += 10;
+                entryY += emptyLineHeight;
                 return;
             }
 
@@ -594,15 +932,15 @@ function buildBookPdf(entries, title, styleKey = 'default') {
 
             wrappedLines.forEach((line) => {
                 doc.text(line, entryX, entryY);
-                entryY += 17;
+                entryY += lineHeight;
             });
 
             if (pIdx < paragraphs.length - 1) {
-                entryY += 10;
+                entryY += paragraphGap;
             }
         });
 
-        cursorY += entryBlockHeight + 8;
+        cursorY += entryBlockHeight + entryGap;
     });
 
     drawPageFooter();

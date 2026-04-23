@@ -369,6 +369,104 @@ h1 {
         0 14px 0 rgba(86, 69, 48, 0.35);
 }
 
+.picker-thumb-editorial {
+    background: #ffffff;
+    border-color: rgba(148, 163, 184, 0.45);
+}
+
+.picker-thumb-editorial::before {
+    background: #6b7280;
+}
+
+.picker-thumb-editorial::after {
+    background: rgba(51, 65, 85, 0.9);
+    box-shadow:
+        0 7px 0 rgba(51, 65, 85, 0.6),
+        0 14px 0 rgba(51, 65, 85, 0.35);
+}
+
+.picker-thumb-paperback {
+    background: linear-gradient(180deg, #fbf5ea, #f3ead9);
+    border-color: rgba(164, 133, 98, 0.45);
+}
+
+.picker-thumb-paperback::before {
+    background: #b08968;
+}
+
+.picker-thumb-paperback::after {
+    background: rgba(95, 70, 49, 0.82);
+    box-shadow:
+        0 7px 0 rgba(121, 93, 69, 0.55),
+        0 14px 0 rgba(121, 93, 69, 0.35);
+}
+
+.picker-thumb-notebook {
+    background: #ffffff;
+    border-color: rgba(125, 169, 207, 0.5);
+}
+
+.picker-thumb-notebook::before {
+    background: #1f78b4;
+}
+
+.picker-thumb-notebook::after {
+    background: rgba(75, 132, 179, 0.55);
+    box-shadow:
+        0 7px 0 rgba(75, 132, 179, 0.45),
+        0 14px 0 rgba(75, 132, 179, 0.35);
+}
+
+.picker-thumb-classic {
+    background: #ffffff;
+    border-color: rgba(161, 161, 170, 0.48);
+}
+
+.picker-thumb-classic::before {
+    background: #52525b;
+}
+
+.picker-thumb-classic::after {
+    background: rgba(63, 63, 70, 0.82);
+    box-shadow:
+        0 7px 0 rgba(82, 82, 91, 0.56),
+        0 14px 0 rgba(82, 82, 91, 0.35);
+}
+
+.picker-thumb-zen {
+    background: linear-gradient(180deg, #f9fcfb, #f1f7f6);
+    border-color: rgba(122, 160, 158, 0.45);
+}
+
+.picker-thumb-zen::before {
+    background: #5f8f8f;
+}
+
+.picker-thumb-zen::after {
+    background: rgba(81, 116, 116, 0.66);
+    box-shadow:
+        0 7px 0 rgba(81, 116, 116, 0.5),
+        0 14px 0 rgba(81, 116, 116, 0.34);
+}
+
+.picker-thumb-timeline {
+    background: #f8fcff;
+    border-color: rgba(110, 160, 201, 0.45);
+}
+
+.picker-thumb-timeline::before {
+    background: #2563a6;
+}
+
+.picker-thumb-timeline::after {
+    left: 12px;
+    right: 6px;
+    background: rgba(49, 103, 151, 0.72);
+    box-shadow:
+        0 7px 0 rgba(49, 103, 151, 0.5),
+        0 14px 0 rgba(49, 103, 151, 0.35);
+}
+
 .picker-option:hover {
     background: rgba(255, 255, 255, 0.06);
 }
