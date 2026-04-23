@@ -50,6 +50,14 @@
                         <button id="settingsToggleButton" class="icon-button secondary" type="button"
                             aria-label="Open book settings" aria-expanded="false" aria-controls="settingsPanel"
                             disabled>&#9881;</button>
+                        <button id="exportStyleButton" class="icon-button secondary" type="button"
+                            aria-label="Choose export style" aria-expanded="false" aria-controls="exportStylePanel"
+                            disabled>&#128396;</button>
+                        <div id="exportStylePanel" class="picker-menu is-hidden" aria-label="Export styles">
+                            <button type="button" class="picker-option is-active"
+                                data-export-style="default">Default</button>
+                            <button type="button" class="picker-option" data-export-style="ink">Ink saver</button>
+                        </div>
                     </div>
                     <button id="buildPdfButton" type="button" disabled>Download book</button>
                 </div>

@@ -4,6 +4,9 @@ const fileInput = document.getElementById('fileInput');
 const bookTitleInput = document.getElementById('bookTitle');
 const buildPdfButton = document.getElementById('buildPdfButton');
 const settingsToggleButton = document.getElementById('settingsToggleButton');
+const exportStyleButton = document.getElementById('exportStyleButton');
+const exportStylePanel = document.getElementById('exportStylePanel');
+const exportStyleOptions = Array.from(document.querySelectorAll('[data-export-style]'));
 const settingsPanel = document.getElementById('settingsPanel');
 const actionsHint = document.getElementById('actionsHint');
 const resultsList = document.getElementById('resultsList');
@@ -20,9 +23,37 @@ const includeWeekdayInput = document.getElementById('includeWeekday');
 const includeWeekdayWrap = includeWeekdayInput.closest('.setting-field');
 const MONTH_ABBR_WITH_PERIOD = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
 
+const EXPORT_STYLES = {
+    default: {
+        label: 'Default',
+        colors: {
+            paper: [255, 255, 255],
+            paperAccent: [250, 252, 255],
+            text: [28, 36, 48],
+            muted: [96, 104, 116],
+            line: [215, 219, 224],
+            pageNumber: [129, 138, 150],
+            accent: [3, 105, 161]
+        }
+    },
+    ink: {
+        label: 'Ink saver',
+        colors: {
+            paper: [255, 255, 255],
+            paperAccent: [255, 255, 255],
+            text: [28, 28, 28],
+            muted: [88, 88, 88],
+            line: [206, 206, 206],
+            pageNumber: [122, 122, 122],
+            accent: [60, 60, 60]
+        }
+    }
+};
+
 let uploadedCsvText = '';
 let allEntries = [];
 let currentEntries = [];
+let exportStyleKey = 'default';
 
 function normalizeLines(text) {
     return text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
@@ -99,13 +130,35 @@ function setSettingsPanelOpen(isOpen) {
     settingsToggleButton.setAttribute('aria-expanded', String(isOpen));
 }
 
+function setExportStylePanelOpen(isOpen) {
+    exportStylePanel.classList.toggle('is-hidden', !isOpen);
+    exportStyleButton.setAttribute('aria-expanded', String(isOpen));
+}
+
+function getExportStyle(styleKey) {
+    return EXPORT_STYLES[styleKey] || EXPORT_STYLES.default;
+}
+
+function setExportStyle(styleKey) {
+    exportStyleKey = EXPORT_STYLES[styleKey] ? styleKey : 'default';
+    const activeStyle = getExportStyle(exportStyleKey);
+
+    exportStyleOptions.forEach((optionButton) => {
+        optionButton.classList.toggle('is-active', optionButton.dataset.exportStyle === exportStyleKey);
+    });
+
+    exportStyleButton.setAttribute('aria-label', `Choose export style. Current style: ${activeStyle.label}.`);
+}
+
 function updateActionAvailability() {
     const hasEntries = allEntries.length > 0;
     settingsToggleButton.disabled = !hasEntries;
+    exportStyleButton.disabled = !hasEntries;
     buildPdfButton.disabled = !hasEntries;
 
     if (!hasEntries) {
         setSettingsPanelOpen(false);
+        setExportStylePanelOpen(false);
         actionsHint.textContent = 'Upload a CSV to enable settings and download.';
         return;
     }
@@ -334,11 +387,13 @@ function escapeHtml(value) {
         .replace(/'/g, '&#39;');
 }
 
-function buildBookPdf(entries, title) {
+function buildBookPdf(entries, title, styleKey = 'default') {
     const pdfApi = window.jspdf;
     if (!pdfApi?.jsPDF) {
         throw new Error('PDF library failed to load. Check your internet connection and try again.');
     }
+
+    const style = getExportStyle(styleKey);
 
     const { jsPDF } = pdfApi;
     const doc = new jsPDF({ unit: 'pt', format: 'letter' });
@@ -351,15 +406,7 @@ function buildBookPdf(entries, title) {
     let pageNumber = 0;
     let cursorY = topMargin;
 
-    const colors = {
-        paper: [255, 255, 255],
-        paperAccent: [250, 252, 255],
-        text: [28, 36, 48],
-        muted: [96, 104, 116],
-        line: [215, 219, 224],
-        pageNumber: [129, 138, 150],
-        accent: [3, 105, 161]
-    };
+    const colors = style.colors;
 
     function setBodyFont(size = 12) {
         doc.setFont('helvetica', 'normal');
@@ -544,7 +591,7 @@ buildPdfButton.addEventListener('click', () => {
             throw new Error('Add entries before creating a PDF book.');
         }
 
-        buildBookPdf(entries, title);
+        buildBookPdf(entries, title, exportStyleKey);
     } catch (error) {
         setError(error instanceof Error ? error.message : 'Unable to create the PDF.');
     }
@@ -610,9 +657,39 @@ settingsToggleButton.addEventListener('click', (event) => {
     setSettingsPanelOpen(!isOpen);
 });
 
+exportStyleButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const isOpen = !exportStylePanel.classList.contains('is-hidden');
+    setExportStylePanelOpen(!isOpen);
+});
+
+exportStyleOptions.forEach((optionButton) => {
+    optionButton.addEventListener('click', () => {
+        setExportStyle(optionButton.dataset.exportStyle || 'default');
+        setExportStylePanelOpen(false);
+    });
+});
+
+document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target instanceof Node) {
+        const clickedInSettings = settingsPanel.contains(target) || settingsToggleButton.contains(target);
+        const clickedInExportStyle = exportStylePanel.contains(target) || exportStyleButton.contains(target);
+
+        if (!clickedInSettings) {
+            setSettingsPanelOpen(false);
+        }
+
+        if (!clickedInExportStyle) {
+            setExportStylePanelOpen(false);
+        }
+    }
+});
+
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         setSettingsPanelOpen(false);
+        setExportStylePanelOpen(false);
     }
 });
 
@@ -620,5 +697,7 @@ updateYearOptions(allEntries);
 updateWeekdayToggleState();
 updateDateRangeOptions(allEntries);
 updateActionAvailability();
+setExportStyle(exportStyleKey);
 setSettingsPanelOpen(false);
+setExportStylePanelOpen(false);
 render([]);
