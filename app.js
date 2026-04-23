@@ -37,7 +37,9 @@ const EXPORT_STYLES = {
         },
         fonts: {
             heading: 'helvetica',
-            body: 'helvetica'
+            body: 'helvetica',
+            date: 'helvetica',
+            dateStyle: 'bold'
         }
     },
     ink: {
@@ -53,7 +55,9 @@ const EXPORT_STYLES = {
         },
         fonts: {
             heading: 'helvetica',
-            body: 'helvetica'
+            body: 'helvetica',
+            date: 'helvetica',
+            dateStyle: 'bold'
         }
     },
     typewriter: {
@@ -69,7 +73,9 @@ const EXPORT_STYLES = {
         },
         fonts: {
             heading: 'courier',
-            body: 'courier'
+            body: 'courier',
+            date: 'courier',
+            dateStyle: 'normal'
         }
     }
 };
@@ -433,6 +439,8 @@ function buildBookPdf(entries, title, styleKey = 'default') {
     const colors = style.colors;
     const headingFont = style.fonts?.heading || 'helvetica';
     const bodyFont = style.fonts?.body || 'helvetica';
+    const dateFont = style.fonts?.date || headingFont;
+    const dateFontStyle = style.fonts?.dateStyle || 'bold';
 
     function setBodyFont(size = 12) {
         doc.setFont(bodyFont, 'normal');
@@ -566,7 +574,7 @@ function buildBookPdf(entries, title, styleKey = 'default') {
         const entryX = marginX + innerPaddingX;
         let entryY = cursorY + innerPaddingTop + 2;
 
-        doc.setFont(headingFont, 'bold');
+        doc.setFont(dateFont, dateFontStyle);
         doc.setFontSize(16);
         doc.setTextColor(...colors.text);
         doc.text(formatEntryDate(entry.entryDate), entryX, entryY);
