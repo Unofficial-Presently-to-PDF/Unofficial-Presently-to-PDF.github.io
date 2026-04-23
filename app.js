@@ -391,16 +391,19 @@ function buildBookPdf(entries, title) {
     }
 
     function measureEntryHeight(entry, innerWidth) {
-        const paragraphLines = entry.entryContent.split('\n').reduce((total, paragraph) => {
+        const paragraphs = entry.entryContent.split('\n');
+        const bodyHeight = paragraphs.reduce((total, paragraph, index) => {
             if (paragraph === '') {
-                return total + 1;
+                return total + 10;
             }
 
-            return total + doc.splitTextToSize(paragraph, innerWidth).length;
+            const wrappedLines = doc.splitTextToSize(paragraph, innerWidth);
+            const wrappedHeight = wrappedLines.length * 17;
+            const trailingGap = index < paragraphs.length - 1 ? 10 : 0;
+            return total + wrappedHeight + trailingGap;
         }, 0);
 
-        const paragraphBreaks = Math.max(0, entry.entryContent.split('\n').length - 1);
-        return 20 + 20 + (paragraphLines * 17) + (paragraphBreaks * 10) + 24;
+        return 20 + 18 + bodyHeight + 12;
     }
 
     function getJournalHeadingLabel() {
@@ -518,7 +521,7 @@ function buildBookPdf(entries, title) {
             }
         });
 
-        cursorY += entryBlockHeight + 14;
+        cursorY += entryBlockHeight + 8;
     });
 
     drawPageFooter();
