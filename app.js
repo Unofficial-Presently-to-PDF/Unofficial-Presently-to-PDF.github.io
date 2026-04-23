@@ -239,43 +239,6 @@ const EXPORT_STYLES = {
             runningHeader: true
         }
     },
-    classic: {
-        label: 'Classic Book',
-        colors: {
-            paper: [255, 255, 255],
-            paperAccent: [255, 255, 255],
-            text: [30, 30, 30],
-            muted: [90, 90, 90],
-            line: [215, 215, 215],
-            pageNumber: [102, 102, 102],
-            accent: [92, 92, 92]
-        },
-        fonts: {
-            heading: 'times',
-            body: 'times',
-            date: 'times',
-            dateStyle: 'bold'
-        },
-        typography: {
-            coverTitleSize: 35,
-            coverBodySize: 13,
-            dateSize: 18,
-            bodySize: 11.5,
-            lineHeight: 18,
-            paragraphGap: 10,
-            emptyLineHeight: 10,
-            dateGap: 24
-        },
-        layout: {
-            marginX: 68,
-            card: false,
-            accentStripe: false,
-            sectionRule: true,
-            entryGap: 16,
-            pageNumberAlign: 'center',
-            runningHeader: false
-        }
-    },
     zen: {
         label: 'Zen Journal',
         colors: {
